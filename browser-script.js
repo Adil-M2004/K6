@@ -27,7 +27,7 @@ export function setup() {
   }
 }
 
-export default async function() {
+export default async function () {
   let checkData;
   const page = await browser.newPage();
 
@@ -43,10 +43,9 @@ export default async function() {
     await page.locator('a', { hasText: 'Login' }).click();
     await page.waitForTimeout(500);
 
-    //await page.screenshot({ path: "screenshot.png" });
 
     //ASSERTION - Check if the header text is correct IN THE LOGIN PAGE
-   checkData = await page.locator("h1").textContent();
+    checkData = await page.locator("h1").textContent();
     check(page, {
       LoginPage: checkData === "QuickPizza User Login",
     });
@@ -54,10 +53,12 @@ export default async function() {
     //INPUT USERNAME
     await page.locator('#username').fill('Username');
     await page.screenshot({ path: "screenshot1.png" });
+    sleep(1);
 
     //INPUT PASSWORD
     await page.locator('#password').fill('12345678');
     await page.screenshot({ path: "screenshot2.png" });
+    sleep(1);
 
     //click sign in button
     await page.getByRole('button', { name: 'Sign in' }).click();
@@ -65,14 +66,37 @@ export default async function() {
     await page.screenshot({ path: "screenshot3.png" });
     //await page.waitForTimeout(500);
 
-     //ASSERTION - check if correct error message is shown
+    //ASSERTION - check if correct error message is shown
     const errorMessage = page.locator('.text-red-500.text-center');
     const errorText = await errorMessage.textContent();
-   
-    
+
     check(page, {
       Error: errorText.includes("Login failed: "),
     });
+
+    // Click the "Back to main page" link to return to the main page
+    await page.getByRole('link', { name: 'Back to main page' }).click();
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: "screenshot4.png" });
+
+    //ASSERTION - Check if the header text is correct AfeTER GOING BACK TO THE MAIN PAGE
+    checkData = await page.locator("h1").textContent();
+    check(page, {
+      headerAfterBackPage: checkData === "Looking to break out of your pizza routine?",
+    });
+
+    //Click the "Pizza, Please!" button
+    await page.locator('button[name="pizza-please"]').click();
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: "screenshot5.png" });
+
+    //ASSERTION - check if the pizza recipe is shown
+    const recipe = page.locator('div.text-left.p-4');
+    const recipeText = await recipe.textContent();
+    check(page, {
+      recipe: recipeText.includes("Our recommendation:"),
+    });
+    
 
     //error handling 
   } catch (error) {
