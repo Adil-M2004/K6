@@ -1,0 +1,14 @@
+{
+    "name": "k6-browser-script",
+    "version": "1.0.0",
+    "description": "",
+    "main": "browser-script.js",
+    "scripts": {
+        "test": "k6 run browser-script.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@playwright/test": "^1.35.0"
+    }
+}

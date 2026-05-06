@@ -51,33 +51,33 @@ export default async function () {
     });
 
     //INPUT USERNAME
-    await page.locator('#username').fill('Username');
-    await page.screenshot({ path: "screenshot1.png" });
+    await page.locator('#username').fill('default');
+    await page.screenshot({ path: "Steps/step1.png" });
     sleep(1);
 
     //INPUT PASSWORD
     await page.locator('#password').fill('12345678');
-    await page.screenshot({ path: "screenshot2.png" });
+    await page.screenshot({ path: "Steps/step2.png" });
     sleep(1);
 
     //click sign in button
     await page.getByRole('button', { name: 'Sign in' }).click();
     await page.waitForTimeout(500);
-    await page.screenshot({ path: "screenshot3.png" });
+    await page.screenshot({ path: "Steps/step3.png" });
     //await page.waitForTimeout(500);
 
-    //ASSERTION - check if correct error message is shown
-    const errorMessage = page.locator('.text-red-500.text-center');
-    const errorText = await errorMessage.textContent();
+    //ASSERTION - check if correct message is shown after Sucessfull login
+    const Message = await page.locator('h2').textContent();
+   // const errorText = await errorMessage.textContent();
 
     check(page, {
-      Error: errorText.includes("Login failed: "),
+      Message: Message.includes("Your Pizza Ratings:"),
     });
 
     // Click the "Back to main page" link to return to the main page
     await page.getByRole('link', { name: 'Back to main page' }).click();
     await page.waitForTimeout(500);
-    await page.screenshot({ path: "screenshot4.png" });
+    await page.screenshot({ path: "Steps/step4.png" });
 
     //ASSERTION - Check if the header text is correct AfeTER GOING BACK TO THE MAIN PAGE
     checkData = await page.locator("h1").textContent();
@@ -88,7 +88,7 @@ export default async function () {
     //Click the "Pizza, Please!" button
     await page.locator('button[name="pizza-please"]').click();
     await page.waitForTimeout(500);
-    await page.screenshot({ path: "screenshot5.png" });
+    await page.screenshot({ path: "Steps/step5.png" });
 
     //ASSERTION - check if the pizza recipe is shown
     const recipe = page.locator('div.text-left.p-4');
@@ -98,7 +98,7 @@ export default async function () {
     });
     
 
-    //error handling 
+    //error handling ****************************************
   } catch (error) {
     fail(`Browser iteration failed: ${error.message}`);
   } finally {
