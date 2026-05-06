@@ -16,7 +16,7 @@ export const options = {
 let httpErrors = new Counter('http_errors');
 
 export default function () {
-    let res = http.get('https://b9cc0f4c24d44fc0bb3355b3c24c1af9.api.mockbin.io');
+    let res = http.get('https://b9cc0f4c24d44fc0bb3355b3c24c1af9.api.mockbin.io/');
 
     if (res.error) {
         httpErrors.add(1);
