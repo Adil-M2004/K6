@@ -7,7 +7,8 @@
         "test": "k6 run browser-script.js",
         "testDebug" : "k6 run --http-debug browser-script.js",
         "test2": "k6 run script.js",
-        "test2Debug": "k6 run --http-debug script.js"
+        "test2Debug": "k6 run --http-debug script.js",
+        "https": "k6 run https_script.js"
     },
     "author": "",
     "license": "ISC",
