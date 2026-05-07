@@ -4,11 +4,27 @@
     "description": "",
     "main": "browser-script.js",
     "scripts": {
-        "test": "k6 run browser-script.js"
+        "test": "k6 run browser-script.js",
+        "testDebug" : "k6 run --http-debug browser-script.js",
+        "test2": "k6 run script.js",
+        "test2Debug": "k6 run --http-debug script.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "@playwright/test": "^1.35.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Adil-M2004/K6.git"
+    },
+    "keywords": [],
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/Adil-M2004/K6/issues"
+    },
+    "homepage": "https://github.com/Adil-M2004/K6#readme",
+    "devDependencies": {
+        "@types/k6": "^1.7.0"
     }
 }
