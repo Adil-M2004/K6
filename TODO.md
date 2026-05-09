@@ -10,4 +10,4 @@ For test.k6.io (https://quickpizza.grafana.com/), use the following journey
 - Wait for the recommendations section to load.
 - Validate that recommendation content is displayed
 
-**Please, implement the script using K6 and Jmeter.**
+**Please, implement the script using K6 and Jmeter.**gg
