@@ -1,30 +1,32 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
+import { jUnit } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 export const options = {
-  // vus: 90,
-  // iterations: 100,
+  vus: 90,
+  iterations: 100,
 
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
     http_req_duration: ['p(99)<1000'], // 99% of requests should be below 1s
   },
 
-   // define scenarios
-  scenarios: {
-    // arbitrary name of scenario
-    average_load: {
-      executor: 'ramping-vus',
-      stages: [
-        // ramp up to average load of 20 virtual users
-        { duration: '10s', target: 20 },
-        // maintain load
-        { duration: '50s', target: 20 },
-        // ramp down to zero
-        { duration: '5s', target: 0 },
-      ],
-    },
-  },
+  //  // define scenarios
+  // scenarios: {
+  //   // arbitrary name of scenario
+  //   average_load: {
+  //     executor: 'ramping-vus',
+  //     stages: [
+  //       // ramp up to average load of 20 virtual users
+  //       { duration: '10s', target: 20 },
+  //       // maintain load
+  //       { duration: '50s', target: 20 },
+  //       // ramp down to zero
+  //       { duration: '5s', target: 0 },
+  //     ],
+  //   },
+  // },
 
 };
 
@@ -83,3 +85,19 @@ export default function () {
 
   sleep(1);
 }
+
+export function handleSummary(data) {
+  return {
+    'junit.xml': jUnit(data), // This creates the file
+  };
+}
+
+// export function handleSummary(data) {
+//   return {
+//     // This creates a file named 'summary.json' in your current directory
+//     'summary.json': JSON.stringify(data),
+    
+//     // Optional: This keeps the standard console output visible as well
+//     'stdout': textSummary(data, { indent: ' ', enableColors: true }),
+//   };
+// }
